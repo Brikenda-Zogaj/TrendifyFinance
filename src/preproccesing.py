@@ -13,3 +13,10 @@ def preprocess_data(df):
 
     print("Data preprocessing completed!")
     return df
+
+if __name__ == "__main__":
+    file_path = "../data/cleaned_data.csv"
+    df = pd.read_csv(file_path)
+    df = preprocess_data(df)
+    df.to_csv("../data/preprocessed_data.csv", index=False)
+    print("Preprocessed data saved!")
