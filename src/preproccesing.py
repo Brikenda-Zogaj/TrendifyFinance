@@ -7,8 +7,13 @@ def preprocess_data(df):
     # This convert 'Date' to datetime (nese ekziston)
     if 'Date' in df.columns:
         df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')
-    # Handle missing values
-    df.fillna(df.mean(), inplace=True)
+     # This convert numeric columns (injoron stringjet)
+    for col in df.select_dtypes(include=['object']).columns:
+        if col != 'Date':
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+
+    # This fill missing values (vetem numeric values)
+    df.fillna(df.select_dtypes(include=['number']).mean(), inplace=True)
 
     # Normalize numerical values (if needed)
     numerical_features = ["Amount"]
