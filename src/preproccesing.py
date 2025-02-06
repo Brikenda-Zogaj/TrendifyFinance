@@ -3,6 +3,10 @@ from sklearn.preprocessing import StandardScaler
 
 
 def preprocess_data(df):
+
+    # This convert 'Date' to datetime (nese ekziston)
+    if 'Date' in df.columns:
+        df['Date'] = pd.to_datetime(df['Date'], dayfirst=True, errors='coerce')
     # Handle missing values
     df.fillna(df.mean(), inplace=True)
 
