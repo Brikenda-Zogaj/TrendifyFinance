@@ -21,7 +21,7 @@ def predict_next_expense():
     df = pd.read_csv(DATA_PATH)
 
     # This select the last row for prediction
-    latest_data = df.iloc[-1:].drop(columns=["Amount"])
+    latest_data = df[["Amount"]].iloc[-1:]
     prediction = model.predict(latest_data)
 
     print(f"Predicted next expense amount: {prediction[0]:.2f}")
