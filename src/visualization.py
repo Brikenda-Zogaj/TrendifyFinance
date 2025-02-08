@@ -2,7 +2,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
-def plot_expense_trend(df):
+def plot_expense_trend(df: object) -> object:
     """Plots a time series of expenses over time."""
 
     # Convert 'Date' column to datetime, allowing for different formats
@@ -25,4 +25,6 @@ def plot_expense_trend(df):
     plt.title('Expense Trend Over Time')
     plt.xticks(rotation=45)
     plt.grid()
-    plt.show()
+    plt.savefig("data/expense_trend.png")
+    print("Expense trend saved as 'data/expense_trend.png'.")
+
