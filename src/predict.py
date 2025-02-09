@@ -1,12 +1,13 @@
+import numpy as np
 import pandas as pd
 import joblib
 import os
 
 MODEL_PATH = "../models/trend_model.pkl"
-DATA_PATH = "../data/preprocessed_data.csv"
+DATA_PATH = "./data/preprocessed_data.csv"
 
 
-def predict_next_expense():
+def predict_next_expense(days=5):
     """Loads the model and predicts the next expense."""
     if not os.path.exists(MODEL_PATH):
         raise FileNotFoundError(f"Model not found at {MODEL_PATH}. Train the model first.")
@@ -21,11 +22,21 @@ def predict_next_expense():
     df = pd.read_csv(DATA_PATH)
 
     # This select the last row for prediction
-    latest_data = df[["Amount"]].iloc[-1:]
-    prediction = model.predict(latest_data)
+    latest_expense = df[["Amount"]].iloc[-1:].values.reshape(1,-1)
+    predictions = []
 
-    print(f"Predicted next expense amount: {prediction[0]:.2f}")
-    return prediction[0]
+    for _ in range(days):
+        next_expense = model.predict(latest_expense)[0]
+        predictions.append(next_expense)
+        latest_expense = np.array([[next_expense]])
+
+
+    print(f"Predicted next {days} days:")
+    for i, pred in enumerate(predictions, 1):
+        print(f"Day {i}: {pred:.2f} €")
+
+    return predictions
+
 
 
 if __name__ == "__main__":
