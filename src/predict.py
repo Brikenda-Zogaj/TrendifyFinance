@@ -22,7 +22,7 @@ def predict_next_expense(days=5):
     df = pd.read_csv(DATA_PATH)
 
     # This select the last row for prediction
-    latest_expense = df[["Amount"]].iloc[-1:].values.reshape(1,-1)
+    latest_expense = df["Amount"].iloc[-1:].values.reshape(1,-1)
     predictions = []
 
     for _ in range(days):
