@@ -39,5 +39,4 @@ def predict_next_expense(days=5):
 
 
 
-if __name__ == "__main__":
-    predict_next_expense()
+
